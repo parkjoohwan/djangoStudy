@@ -1,0 +1,37 @@
+<div class="panel-heading">
+    <h3 class="panel-title">
+        업로드한 이미지를 클릭하면 동물인지(개/고양이) 알 수 있습니다.
+    </h3>
+    {% if images %}
+    <ul>
+        {% for image in images %}
+        <li><a href="/api/predict?image_url={{image.imagefile.url}}">{{image.imagefile.name}}</a></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>
+         업로드 된 이미지가 없습니다.
+    </p>
+    {% endif %}
+
+</div>
+
+<div class="panel-body">
+
+    <form action="uploadimage" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>
+            {{form.non_file_errors}}
+        </p>
+        <p>
+            {{form.imagefile.label}} {{form.imagefile.help_text}}
+        </p>
+        <p>
+            {{form.imagefile.erros}}
+            {{form.imagefile}}
+        </p>
+        <p>
+            <input type="submit" value="Upload"/>
+        </p>
+    </form>
+</div>
